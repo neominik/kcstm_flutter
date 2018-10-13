@@ -11,6 +11,7 @@ class Event {
   final String dateSingle;
   final String organizer;
   final String description;
+  final String registerDate;
 
   Event(
       {this.title,
@@ -18,7 +19,8 @@ class Event {
       this.dateEnd,
       this.dateSingle,
       this.organizer,
-      this.description});
+        this.description,
+        this.registerDate});
 }
 
 Future<List<Event>> fetchEvents() async {
@@ -44,18 +46,21 @@ List<Event> decode(String body) {
 
 Event trToEvent(dom.Element tr) {
   return Event(
-      title: nodeToText(tr
-          .getElementsByClassName('views-field-title')
-          .expand((td) => td.getElementsByTagName('a'))),
-      dateStart: nodeToText(tr.getElementsByClassName('date-display-start')),
-      dateEnd: nodeToText(tr.getElementsByClassName('date-display-end')),
-      dateSingle: nodeToText(tr
-          .getElementsByClassName('views-field-field-datum')
-          .expand((td) => td.getElementsByClassName('date-display-single'))),
-      organizer: nodeToText(
-          tr.getElementsByClassName('views-field-field-veranstalter-1')),
-      description:
-          getTextFromBody(tr.getElementsByClassName('views-field-body')));
+    title: nodeToText(tr
+        .getElementsByClassName('views-field-title')
+        .expand((td) => td.getElementsByTagName('a'))),
+    dateStart: nodeToText(tr.getElementsByClassName('date-display-start')),
+    dateEnd: nodeToText(tr.getElementsByClassName('date-display-end')),
+    dateSingle: nodeToText(tr
+        .getElementsByClassName('views-field-field-datum')
+        .expand((td) => td.getElementsByClassName('date-display-single'))),
+    organizer: nodeToText(
+        tr.getElementsByClassName('views-field-field-veranstalter-1')),
+    description: getTextFromBody(tr.getElementsByClassName('views-field-body')),
+    registerDate: nodeToText(tr
+        .getElementsByClassName('views-field-field-anmeldedatum')
+        .expand((td) => td.getElementsByClassName('date-display-single'))),
+  );
 }
 
 String nodeToText(Iterable<dom.Element> node) {

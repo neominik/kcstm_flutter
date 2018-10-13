@@ -10,6 +10,9 @@ class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _headlineFont = const TextStyle(fontSize: 22.0);
+    final date = event.dateStart != null
+        ? 'vom ${event.dateStart} bis zum ${event.dateEnd}'
+        : 'am ${event.dateSingle}';
     return Scaffold(
         appBar: AppBar(
           title: Text('Details'),
@@ -21,7 +24,7 @@ class DetailScreen extends StatelessWidget {
               event.title,
               style: _headlineFont,
             ),
-            Text('Von bis anmeldung event.dateStart'),
+            Text('$date Anmeldeschluss am ${event.registerDate}'),
             Text(
               'Beschreibung',
               style: _headlineFont,

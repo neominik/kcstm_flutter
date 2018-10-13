@@ -13,6 +13,7 @@ class Event {
   final String description;
   final String registerDate;
   final String phone;
+  final String email;
 
   Event({
     this.title,
@@ -23,6 +24,7 @@ class Event {
     this.description,
     this.registerDate,
     this.phone,
+    this.email,
   });
 }
 
@@ -65,6 +67,9 @@ Event trToEvent(dom.Element tr) {
         .expand((td) => td.getElementsByClassName('date-display-single'))),
     phone: nodeToText(
         tr.getElementsByClassName('views-field-field-telefon-fahrtenleiter')),
+    email: nodeToText(tr
+        .getElementsByClassName('views-field-field-email-fahrtenleiter')
+        .expand((td) => td.getElementsByTagName('a'))),
   );
 }
 

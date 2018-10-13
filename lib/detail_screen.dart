@@ -39,7 +39,7 @@ class DetailScreen extends StatelessWidget {
             Text(event.phone.isNotEmpty
                 ? event.phone
                 : 'Keine Telefonnummer angegeben'),
-            Text('email'),
+            Text(event.email),
             Text(
               'Teilnehmer',
               style: _headlineFont,

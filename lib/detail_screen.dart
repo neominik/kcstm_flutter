@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'event.dart';
+import 'participate_screen.dart';
 
 class DetailScreen extends StatelessWidget {
   final Event event;
@@ -15,7 +16,15 @@ class DetailScreen extends StatelessWidget {
       ),
       body: SafeArea(child: _buildDetails()),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      ParticipateScreen(
+                        event: event,
+                      )));
+        },
         tooltip: 'Mitfahren',
         child: Icon(Icons.group_add),
       ),

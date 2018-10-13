@@ -13,6 +13,8 @@ class DetailScreen extends StatelessWidget {
     final date = event.dateStart != null
         ? 'vom ${event.dateStart} bis zum ${event.dateEnd}'
         : 'am ${event.dateSingle}';
+    final participants = event.participants.split(RegExp(r"[,;]")).map((s) =>
+        s.trim()).join('\n');
     return Scaffold(
         appBar: AppBar(
           title: Text('Details'),
@@ -44,7 +46,7 @@ class DetailScreen extends StatelessWidget {
               'Teilnehmer',
               style: _headlineFont,
             ),
-            Text('teilnehmer'),
+            Text(participants),
           ],
         ));
   }

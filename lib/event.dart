@@ -12,15 +12,18 @@ class Event {
   final String organizer;
   final String description;
   final String registerDate;
+  final String phone;
 
-  Event(
-      {this.title,
-      this.dateStart,
-      this.dateEnd,
-      this.dateSingle,
-      this.organizer,
-        this.description,
-        this.registerDate});
+  Event({
+    this.title,
+    this.dateStart,
+    this.dateEnd,
+    this.dateSingle,
+    this.organizer,
+    this.description,
+    this.registerDate,
+    this.phone,
+  });
 }
 
 Future<List<Event>> fetchEvents() async {
@@ -60,6 +63,8 @@ Event trToEvent(dom.Element tr) {
     registerDate: nodeToText(tr
         .getElementsByClassName('views-field-field-anmeldedatum')
         .expand((td) => td.getElementsByClassName('date-display-single'))),
+    phone: nodeToText(
+        tr.getElementsByClassName('views-field-field-telefon-fahrtenleiter')),
   );
 }
 

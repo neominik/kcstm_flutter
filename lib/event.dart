@@ -4,8 +4,11 @@ import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' show parse;
 import 'package:http/http.dart' as http;
 
+final homepage = 'https://kanu-club-steinhuder-meer.de';
+
 class Event {
   final String title;
+  final String link;
   final String dateStart;
   final String dateEnd;
   final String dateSingle;
@@ -18,6 +21,7 @@ class Event {
 
   Event({
     this.title,
+    this.link,
     this.dateStart,
     this.dateEnd,
     this.dateSingle,
@@ -31,8 +35,7 @@ class Event {
 }
 
 Future<List<Event>> fetchEvents() async {
-  final response =
-      await http.get('https://kanu-club-steinhuder-meer.de/?q=mobilkalender');
+  final response = await http.get('$homepage/?q=mobilkalender');
 
   if (response.statusCode == 200) {
     return decode(response.body);
@@ -52,10 +55,11 @@ List<Event> decode(String body) {
 }
 
 Event trToEvent(dom.Element tr) {
+  final titleA = tr.getElementsByClassName('views-field-title').expand((td) =>
+      td.getElementsByTagName('a'));
   return Event(
-    title: nodeToText(tr
-        .getElementsByClassName('views-field-title')
-        .expand((td) => td.getElementsByTagName('a'))),
+    title: nodeToText(titleA),
+    link: homepage + titleA.first.attributes['href'],
     dateStart: nodeToText(tr.getElementsByClassName('date-display-start')),
     dateEnd: nodeToText(tr.getElementsByClassName('date-display-end')),
     dateSingle: nodeToText(tr

@@ -32,7 +32,7 @@ class DetailScreen extends StatelessWidget {
               style: _headlineFont,
             ),
             Text(event.description),
-            Text('link'),
+            Text(event.link),
             Text(
               'Kontakt',
               style: _headlineFont,

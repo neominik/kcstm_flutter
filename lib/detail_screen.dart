@@ -13,7 +13,7 @@ class DetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Details'),
       ),
-      body: _buildDetails(),
+      body: SafeArea(child: _buildDetails()),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         tooltip: 'Mitfahren',

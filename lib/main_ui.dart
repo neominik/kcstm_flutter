@@ -32,7 +32,7 @@ class _EventListPageState extends State<EventListPage> {
       appBar: new AppBar(
         title: new Text(widget.title),
       ),
-      body: _buildEvents(),
+      body: SafeArea(child: _buildEvents()),
       floatingActionButton: new FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',

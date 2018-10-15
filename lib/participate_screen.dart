@@ -26,6 +26,17 @@ class ParticipateScreenState extends State<ParticipateScreen> {
   ParticipateScreenState(this._event);
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    _phoneController.dispose();
+    _emailController.dispose();
+    _commentsController.dispose();
+    _participantsController.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

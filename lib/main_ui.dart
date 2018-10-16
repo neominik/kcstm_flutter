@@ -13,14 +13,11 @@ class EventListPage extends StatefulWidget {
 }
 
 class _EventListPageState extends State<EventListPage> {
+  Future<List<Event>> _fetcher = fetchEvents();
+
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      // TODO
+      _fetcher = fetchEvents();
     });
   }
 
@@ -32,7 +29,10 @@ class _EventListPageState extends State<EventListPage> {
       appBar: new AppBar(
         title: new Text(widget.title),
       ),
-      body: SafeArea(child: _buildEvents(), bottom: false,),
+      body: SafeArea(
+        child: _buildEvents(),
+        bottom: false,
+      ),
       floatingActionButton: new FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
@@ -43,9 +43,10 @@ class _EventListPageState extends State<EventListPage> {
 
   Widget _buildEvents() {
     return FutureBuilder<List<Event>>(
-      future: fetchEvents(),
+      future: _fetcher,
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
+        if (snapshot.hasData &&
+            snapshot.connectionState == ConnectionState.done) {
           return ListView(
             padding: const EdgeInsets.all(16.0),
             children: snapshot.data.map(_buildRow).toList(),
@@ -53,15 +54,15 @@ class _EventListPageState extends State<EventListPage> {
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
         }
-        return CircularProgressIndicator();
+        return Center(child: CircularProgressIndicator());
       },
     );
   }
 
   Widget _buildRow(Event event) {
     final String date = (event.dateStart != null
-            ? "${event.dateStart}\n- ${event.dateEnd}"
-            : event.dateSingle) +
+        ? "${event.dateStart}\n- ${event.dateEnd}"
+        : event.dateSingle) +
         '\n${event.organizer.toString().replaceAll(RegExp(r"[\s/,]+"), '\n')}';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,8 +89,8 @@ class _EventListPageState extends State<EventListPage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => DetailScreen(
-                          event: event,
-                        )));
+                      event: event,
+                    )));
           },
         ),
         Divider(),

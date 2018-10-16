@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
       title: 'KCSTM',
       theme: new ThemeData(
         primaryColor: Colors.grey.shade900,
+        accentColor: Colors.indigo
       ),
       home: new EventListPage(title: 'KCSTM'),
     );

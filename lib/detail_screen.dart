@@ -1,4 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'event.dart';
 import 'participate_screen.dart';
@@ -59,9 +61,7 @@ class DetailScreen extends StatelessWidget {
           style: _headlineFont,
         ),
         Text(event.organizer),
-        Text(event.phone.isNotEmpty
-            ? event.phone
-            : 'Keine Telefonnummer angegeben'),
+        _buildPhoneNumbers(),
         Text(event.email),
         Text(
           'Teilnehmer',
@@ -70,5 +70,29 @@ class DetailScreen extends StatelessWidget {
         Text(_participants),
       ],
     );
+  }
+
+  Widget _buildPhoneNumbers() {
+    if (event.phone.isNotEmpty) {
+      return RichText(
+          text: TextSpan(
+            children: event.phone
+                .split(',')
+                .map((s) => s.trim().replaceAll(RegExp(r"\s+"), '-'))
+                .map((number) =>
+                TextSpan(
+                    text: number,
+                    style: TextStyle(
+                        color: Colors.blue,
+                        decoration: TextDecoration.underline),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        launch('tel:$number');
+                      }))
+                .expand((textSpan) => <TextSpan>[textSpan, TextSpan(text: ' ')])
+                .toList(),
+          ));
+    }
+    return Text('Keine Telefonnummer angegeben');
   }
 }

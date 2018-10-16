@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io' show SocketException;
 
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' show parse;
@@ -35,12 +36,20 @@ class Event {
 }
 
 Future<List<Event>> fetchEvents() async {
-  final response = await http.get('$homepage/?q=mobilkalender');
+  try {
+    final response = await http.get('$homepage/?q=mobilkalender');
 
-  if (response.statusCode == 200) {
-    return decode(response.body);
-  } else {
-    throw Exception('Failed to load events');
+    if (response.statusCode == 200) {
+      return decode(response.body);
+    } else {
+      throw Exception(
+          'Failed to load events, status code: ${response.statusCode}');
+    }
+  } catch (e) {
+    if (e is SocketException) {
+      throw '${e.message} - are you connected to the internet?';
+    }
+    throw e;
   }
 }
 
@@ -55,8 +64,9 @@ List<Event> decode(String body) {
 }
 
 Event trToEvent(dom.Element tr) {
-  final titleA = tr.getElementsByClassName('views-field-title').expand((td) =>
-      td.getElementsByTagName('a'));
+  final titleA = tr
+      .getElementsByClassName('views-field-title')
+      .expand((td) => td.getElementsByTagName('a'));
   return Event(
     title: nodeToText(titleA),
     link: homepage + titleA.first.attributes['href'],

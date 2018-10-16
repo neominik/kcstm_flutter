@@ -51,7 +51,8 @@ class _EventListPageState extends State<EventListPage> {
             padding: const EdgeInsets.all(16.0),
             children: snapshot.data.map(_buildRow).toList(),
           );
-        } else if (snapshot.hasError) {
+        } else if (snapshot.hasError &&
+            snapshot.connectionState == ConnectionState.done) {
           return Text('${snapshot.error}');
         }
         return Center(child: CircularProgressIndicator());

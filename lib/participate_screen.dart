@@ -77,7 +77,6 @@ class ParticipateScreenState extends State<ParticipateScreen> {
           style: _headlineFont,
         ),
         TextFormField(
-          autofocus: true,
           controller: _nameController,
           validator: (value) {
             if (value.isEmpty) return 'Bitte Namen eingeben!';
@@ -89,6 +88,7 @@ class ParticipateScreenState extends State<ParticipateScreen> {
         ),
         TextFormField(
           controller: _phoneController,
+          keyboardType: TextInputType.phone,
           validator: (value) {
             if (value.isEmpty)
               return 'Bitte Telefonnummer für Rückfragen angeben!';
@@ -105,6 +105,7 @@ class ParticipateScreenState extends State<ParticipateScreen> {
         ),
         TextFormField(
           controller: _participantsController,
+          keyboardType: TextInputType.numberWithOptions(signed: true),
           validator: (value) {
             if (value.isEmpty)
               return 'Bitte die Anzahl der Teilnehmenden angeben!';
@@ -116,7 +117,7 @@ class ParticipateScreenState extends State<ParticipateScreen> {
 
   _sendEmail() async {
     final subject =
-    Uri.encodeComponent('Anmeldung zu einer Veranstaltung des KCSTM');
+        Uri.encodeComponent('Anmeldung zu einer Veranstaltung des KCSTM');
     final body = Uri.encodeComponent('Hallo ${_event.organizer},' +
         '\n\nfolgende Anmeldung für deine Veranstaltung:\n\n' +
         'Name: ${_nameController.text}\n' +

@@ -22,6 +22,7 @@ dependencies:
   url_launcher: ^4.0.1
   html: any
   http: any
+  shared_preferences: ^0.4.3
 
 dev_dependencies:
   flutter_test:

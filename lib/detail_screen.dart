@@ -43,7 +43,13 @@ class DetailScreen extends StatelessWidget {
   }
 
   Widget _buildDetails() {
-    final _headlineFont = const TextStyle(fontSize: 22.0);
+    final _headlineFont = const TextStyle(
+      fontSize: 22.0,
+      fontWeight: FontWeight.normal,
+      fontFamily: "Roboto",
+      color: Colors.black,
+      decoration: TextDecoration.none,
+    );
     final _date = event.dateStart != null
         ? 'vom ${event.dateStart} bis zum ${event.dateEnd}'
         : 'am ${event.dateSingle}';
@@ -54,16 +60,21 @@ class DetailScreen extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.all(16.0),
       children: <Widget>[
-        Text(
-          event.title,
-          style: _headlineFont,
+        Hero(
+          tag: event.link,
+          child: Text(
+            event.title,
+            style: _headlineFont,
+          ),
         ),
         Text('$_date Anmeldeschluss am ${event.registerDate}'),
         Text(
           'Beschreibung',
           style: _headlineFont,
         ),
-        Text(event.description),
+        Text(
+          event.description,
+        ),
         Text(
           'Kontakt',
           style: _headlineFont,
@@ -84,22 +95,20 @@ class DetailScreen extends StatelessWidget {
     if (event.phone.isNotEmpty) {
       return RichText(
           text: TextSpan(
-            children: event.phone
-                .split(',')
-                .map((s) => s.trim().replaceAll(RegExp(r"\s+"), '-'))
-                .map((number) =>
-                TextSpan(
-                    text: number,
-                    style: TextStyle(
-                        color: Colors.blue,
-                        decoration: TextDecoration.underline),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        launch('tel:$number');
-                      }))
-                .expand((textSpan) => <TextSpan>[textSpan, TextSpan(text: ' ')])
-                .toList(),
-          ));
+        children: event.phone
+            .split(',')
+            .map((s) => s.trim().replaceAll(RegExp(r"\s+"), '-'))
+            .map((number) => TextSpan(
+                text: number,
+                style: TextStyle(
+                    color: Colors.blue, decoration: TextDecoration.underline),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    launch('tel:$number');
+                  }))
+            .expand((textSpan) => <TextSpan>[textSpan, TextSpan(text: ' ')])
+            .toList(),
+      ));
     }
     return Text('Keine Telefonnummer angegeben');
   }

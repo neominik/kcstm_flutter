@@ -15,7 +15,7 @@ class EventListPage extends StatefulWidget {
 class _EventListPageState extends State<EventListPage> {
   Future<List<Event>> _fetcher = fetchEvents();
 
-  void _incrementCounter() {
+  void _reload() {
     setState(() {
       _fetcher = fetchEvents();
     });
@@ -23,8 +23,6 @@ class _EventListPageState extends State<EventListPage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(widget.title),
@@ -34,7 +32,7 @@ class _EventListPageState extends State<EventListPage> {
         bottom: false,
       ),
       floatingActionButton: new FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _reload,
         tooltip: 'Increment',
         child: new Icon(Icons.autorenew),
       ),
@@ -62,17 +60,28 @@ class _EventListPageState extends State<EventListPage> {
 
   Widget _buildRow(Event event) {
     final String date = (event.dateStart != null
-        ? "${event.dateStart}\n- ${event.dateEnd}"
-        : event.dateSingle) +
+            ? "${event.dateStart}\n- ${event.dateEnd}"
+            : event.dateSingle) +
         '\n${event.organizer.toString().replaceAll(RegExp(r"[\s/,]+"), '\n')}';
+    final _titleStyle = TextStyle(
+      fontSize: 16.0,
+      fontWeight: FontWeight.normal,
+      fontFamily: "Roboto",
+      color: Colors.black,
+      decoration: TextDecoration.none,
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         ListTile(
-          title: Text(
-            event.title,
-            maxLines: 2,
-            overflow: TextOverflow.fade,
+          title: Hero(
+            tag: event.link,
+            child: Text(
+              event.title,
+              maxLines: 2,
+              overflow: TextOverflow.fade,
+              style: _titleStyle,
+            ),
           ),
           subtitle: Text(
             event.description,
@@ -90,8 +99,8 @@ class _EventListPageState extends State<EventListPage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => DetailScreen(
-                      event: event,
-                    )));
+                          event: event,
+                        )));
           },
         ),
         Divider(),

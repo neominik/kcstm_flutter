@@ -7,6 +7,15 @@ import 'participate_screen.dart';
 
 class DetailScreen extends StatelessWidget {
   final Event event;
+  final _linkStyle =
+      const TextStyle(color: Colors.blue, decoration: TextDecoration.underline);
+  final _headlineFont = const TextStyle(
+    fontSize: 22.0,
+    fontWeight: FontWeight.normal,
+    fontFamily: "Roboto",
+    color: Colors.black,
+    decoration: TextDecoration.none,
+  );
 
   DetailScreen({Key key, @required this.event}) : super(key: key);
 
@@ -43,13 +52,6 @@ class DetailScreen extends StatelessWidget {
   }
 
   Widget _buildDetails() {
-    final _headlineFont = const TextStyle(
-      fontSize: 22.0,
-      fontWeight: FontWeight.normal,
-      fontFamily: "Roboto",
-      color: Colors.black,
-      decoration: TextDecoration.none,
-    );
     final _date = event.dateStart != null
         ? 'vom ${event.dateStart} bis zum ${event.dateEnd}'
         : 'am ${event.dateSingle}';
@@ -57,6 +59,8 @@ class DetailScreen extends StatelessWidget {
         .split(RegExp(r"[,;]"))
         .map((s) => s.trim())
         .join('\n');
+    final _emailUrl =
+        'mailto:${event.email}?subject=${Uri.encodeComponent(event.title)}';
     return ListView(
       padding: const EdgeInsets.all(16.0),
       children: <Widget>[
@@ -81,7 +85,13 @@ class DetailScreen extends StatelessWidget {
         ),
         Text(event.organizer),
         _buildPhoneNumbers(),
-        Text(event.email),
+        RichText(
+          text: TextSpan(
+            text: event.email,
+            style: _linkStyle,
+            recognizer: TapGestureRecognizer()..onTap = () => launch(_emailUrl),
+          ),
+        ),
         Text(
           'Teilnehmer',
           style: _headlineFont,
@@ -100,12 +110,9 @@ class DetailScreen extends StatelessWidget {
             .map((s) => s.trim().replaceAll(RegExp(r"\s+"), '-'))
             .map((number) => TextSpan(
                 text: number,
-                style: TextStyle(
-                    color: Colors.blue, decoration: TextDecoration.underline),
+                style: _linkStyle,
                 recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                    launch('tel:$number');
-                  }))
+                  ..onTap = () => launch('tel:$number')))
             .expand((textSpan) => <TextSpan>[textSpan, TextSpan(text: ' ')])
             .toList(),
       ));

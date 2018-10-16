@@ -15,6 +15,16 @@ class DetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Details'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.launch),
+            onPressed: () => launch(
+                  event.link,
+                  forceSafariVC: false,
+                ),
+            tooltip: 'Im Browser öffnen',
+          )
+        ],
       ),
       body: SafeArea(child: _buildDetails()),
       floatingActionButton: FloatingActionButton(
@@ -22,8 +32,7 @@ class DetailScreen extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) =>
-                      ParticipateScreen(
+                  builder: (context) => ParticipateScreen(
                         event: event,
                       )));
         },
@@ -55,7 +64,6 @@ class DetailScreen extends StatelessWidget {
           style: _headlineFont,
         ),
         Text(event.description),
-        Text(event.link),
         Text(
           'Kontakt',
           style: _headlineFont,

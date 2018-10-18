@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'add_to_calendar.dart';
 import 'event.dart';
 import 'participate_screen.dart';
 
@@ -25,6 +26,7 @@ class DetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Details'),
         actions: <Widget>[
+          AddToCalendarAction(event),
           IconButton(
             icon: Icon(Icons.launch),
             onPressed: () => launch(

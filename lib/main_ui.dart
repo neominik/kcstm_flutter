@@ -45,9 +45,10 @@ class _EventListPageState extends State<EventListPage> {
       builder: (context, snapshot) {
         if (snapshot.hasData &&
             snapshot.connectionState == ConnectionState.done) {
-          return ListView(
+          return ListView.builder(
             padding: const EdgeInsets.all(16.0),
-            children: snapshot.data.map(_buildRow).toList(),
+            itemCount: snapshot.data.length,
+            itemBuilder: (context, index) => _buildRow(snapshot.data[index]),
           );
         } else if (snapshot.hasError &&
             snapshot.connectionState == ConnectionState.done) {

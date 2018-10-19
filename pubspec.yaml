@@ -7,7 +7,7 @@ description: Cross platform KCSTM app.
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 1.0.0+1
+version: 3.0.0+300
 
 environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
@@ -36,8 +36,6 @@ flutter_icons:
   ios: true
   image_path: assets/icon.png
   image_path_ios: assets/icon_ios.png
-  adaptive_icon_background: "#FFFAFAFA"
-  adaptive_icon_foreground: assets/icon.png
 
 
 # For information on the generic Dart part of this file, see the

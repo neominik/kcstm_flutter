@@ -27,6 +27,7 @@ class AddToCalendarAction extends StatelessWidget {
                   return SimpleDialog(
                     title: const Text('Kalender auswählen'),
                     children: calendars.data
+                        .where((c) => !c.isReadOnly)
                         .map((c) => SimpleDialogOption(
                               onPressed: () {
                                 Navigator.pop(context, c.id);

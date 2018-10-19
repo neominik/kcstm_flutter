@@ -21,22 +21,27 @@ class AddToCalendarAction extends StatelessWidget {
 
           final calendars = await plugin.retrieveCalendars();
           if (calendars.isSuccess) {
-            final selectedCalendar = await showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return SimpleDialog(
-                    title: const Text('Kalender auswählen'),
-                    children: calendars.data
-                        .where((c) => !c.isReadOnly)
-                        .map((c) => SimpleDialogOption(
-                              onPressed: () {
-                                Navigator.pop(context, c.id);
-                              },
-                              child: Text(c.name),
-                            ))
-                        .toList(),
-                  );
-                });
+            String selectedCalendar;
+            if (calendars.data.length == 1) {
+              selectedCalendar = calendars.data.first.id;
+            } else {
+              selectedCalendar = await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return SimpleDialog(
+                      title: const Text('Kalender auswählen'),
+                      children: calendars.data
+                          .where((c) => !c.isReadOnly)
+                          .map((c) => SimpleDialogOption(
+                                onPressed: () {
+                                  Navigator.pop(context, c.id);
+                                },
+                                child: Text(c.name),
+                              ))
+                          .toList(),
+                    );
+                  });
+            }
             final calEvent = calendar.Event(
               selectedCalendar,
               title: event.title,

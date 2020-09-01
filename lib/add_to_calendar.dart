@@ -46,18 +46,9 @@ class AddToCalendarAction extends StatelessWidget {
             final calEvent = calendar.Event(
               selectedCalendar,
               title: event.title,
-              start: DateTime.parse(
-                  (event.dateStart != null ? event.dateStart : event.dateSingle)
-                      .split('.')
-                      .reversed
-                      .join()),
-              end: DateTime.parse(
-                      (event.dateEnd != null ? event.dateEnd : event.dateSingle)
-                          .split('.')
-                          .reversed
-                          .join())
-                  .add(Duration(days: 1)),
-              allDay: true,
+              start: parse(event.dateStart),
+              end: parse(event.dateEnd),
+              allDay: false,
             );
             final res = await plugin.createOrUpdateEvent(calEvent);
             if (res.isSuccess)
@@ -65,5 +56,10 @@ class AddToCalendarAction extends StatelessWidget {
                   SnackBar(content: Text("Zu Kalender hinzugefügt!")));
           }
         });
+  }
+
+  DateTime parse(String date) {
+    final formatted = date.substring(0,10).split(".").reversed.join() + "T" + date.substring(13);
+    return DateTime.parse(formatted);
   }
 }

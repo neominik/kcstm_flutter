@@ -121,7 +121,7 @@ class ParticipateScreenState extends State<ParticipateScreen> {
     final body = Uri.encodeComponent('Hallo ${_event.organizer},' +
         '\n\nfolgende Anmeldung für deine Veranstaltung:\n\n' +
         'Name: ${_nameController.text}\n' +
-        'Datum der Tour: ${_event.dateStart != null ? 'Von ${_event.dateStart} bis ${_event.dateEnd}' : 'Am ${_event.dateSingle}'}\n' +
+        'Datum der Tour: ${_event.dateStart} bis ${_event.dateEnd}\n' +
         'Veranstaltung: ${_event.title}\n' +
         'Bemerkungen: ${_commentsController.text}\n' +
         'Anzahl Teilnehmende: ${_participantsController.text}\n' +

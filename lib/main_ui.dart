@@ -60,9 +60,7 @@ class _EventListPageState extends State<EventListPage> {
   }
 
   Widget _buildRow(Event event) {
-    final String date = (event.dateStart != null
-            ? "${event.dateStart}\n- ${event.dateEnd}"
-            : event.dateSingle) +
+    final String date = formatDate(event.dateStart, event.dateEnd) +
         '\n${event.organizer.toString().replaceAll(RegExp(r"[\s/,]+"), '\n')}';
     final _titleStyle = TextStyle(
       fontSize: 16.0,
@@ -107,5 +105,11 @@ class _EventListPageState extends State<EventListPage> {
         Divider(),
       ],
     );
+  }
+
+  String formatDate(String start, String end) {
+    final startDate = start.substring(0, 10);
+    final endDate = end.substring(0, 10);
+    return startDate == endDate ? startDate : "$startDate\n - $endDate";
   }
 }

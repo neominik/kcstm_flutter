@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 
 import 'add_to_calendar.dart';
 import 'event.dart';
@@ -54,9 +55,7 @@ class DetailScreen extends StatelessWidget {
   }
 
   Widget _buildDetails() {
-    final _date = event.dateStart != null
-        ? 'vom ${event.dateStart} bis zum ${event.dateEnd}'
-        : 'am ${event.dateSingle}';
+    final _date = formatDate(event.dateStart, event.dateEnd);
     final _participants = event.participants
         .split(RegExp(r"[,;]"))
         .map((s) => s.trim())
@@ -73,7 +72,7 @@ class DetailScreen extends StatelessWidget {
             style: _headlineFont,
           ),
         ),
-        Text('$_date Anmeldeschluss am ${event.registerDate}'),
+        Text('$_date\nAnmeldeschluss am ${event.registerDate}'),
         Text(
           'Beschreibung',
           style: _headlineFont,
@@ -99,6 +98,17 @@ class DetailScreen extends StatelessWidget {
           style: _headlineFont,
         ),
         Text(_participants),
+        Text(
+          'Adresse',
+          style: _headlineFont,
+        ),
+        RichText(
+          text: TextSpan(
+            text: event.address,
+            style: _linkStyle,
+            recognizer: TapGestureRecognizer()..onTap = () => MapsLauncher.launchQuery(event.address),
+          ),
+        ),
       ],
     );
   }
@@ -120,5 +130,12 @@ class DetailScreen extends StatelessWidget {
       ));
     }
     return Text('Keine Telefonnummer angegeben');
+  }
+
+  String formatDate(String start, String end) {
+    final startDate = start.substring(0, 10);
+    final endDate = end.substring(0, 10);
+    final endTime = end.substring(13);
+    return startDate == endDate ? "$start bis $endTime" : "$start bis $end";
   }
 }

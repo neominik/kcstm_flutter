@@ -53,7 +53,7 @@ Future<List<Event>> fetchEvents() async {
 }
 
 List<Event> decode(String body) {
-  final rows = const csv.CsvToListConverter(eol: '\n').convert(body);
+  final rows = const csv.CsvToListConverter(eol: '\n', shouldParseNumbers: false).convert(body);
   return rows.skip(1).map(trToEvent).toList();
 }
 

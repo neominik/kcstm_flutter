@@ -15,7 +15,6 @@ class DetailScreen extends StatelessWidget {
     fontSize: 22.0,
     fontWeight: FontWeight.normal,
     fontFamily: "Roboto",
-    color: Colors.black,
     decoration: TextDecoration.none,
   );
 
@@ -67,9 +66,12 @@ class DetailScreen extends StatelessWidget {
       children: <Widget>[
         Hero(
           tag: event.link,
-          child: Text(
-            event.title,
-            style: _headlineFont,
+          child: Material(
+            type: MaterialType.transparency,
+            child: Text(
+              event.title,
+              style: _headlineFont,
+            ),
           ),
         ),
         Text('$_date\nAnmeldeschluss am ${event.registerDate}'),

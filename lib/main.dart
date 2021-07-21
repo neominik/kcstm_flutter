@@ -10,9 +10,17 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'KCSTM',
       theme: new ThemeData(
+        brightness: Brightness.light,
+        primaryColor: Colors.grey.shade900,
+        accentColor: Colors.indigo,
+
+      ),
+      darkTheme: new ThemeData(
+        brightness: Brightness.dark,
         primaryColor: Colors.grey.shade900,
         accentColor: Colors.indigo
       ),
+      themeMode: ThemeMode.system,
       home: new EventListPage(title: 'KCSTM'),
     );
   }

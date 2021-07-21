@@ -66,7 +66,6 @@ class _EventListPageState extends State<EventListPage> {
       fontSize: 16.0,
       fontWeight: FontWeight.normal,
       fontFamily: "Roboto",
-      color: Colors.black,
       decoration: TextDecoration.none,
     );
     return Column(
@@ -75,11 +74,14 @@ class _EventListPageState extends State<EventListPage> {
         ListTile(
           title: Hero(
             tag: event.link,
-            child: Text(
-              event.title,
-              maxLines: 2,
-              overflow: TextOverflow.fade,
-              style: _titleStyle,
+            child: Material(
+              type: MaterialType.transparency,
+              child: Text(
+                event.title,
+                maxLines: 2,
+                overflow: TextOverflow.fade,
+                style: _titleStyle,
+              ),
             ),
           ),
           subtitle: Text(

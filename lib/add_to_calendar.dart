@@ -52,7 +52,7 @@ class AddToCalendarAction extends StatelessWidget {
             );
             final res = await plugin.createOrUpdateEvent(calEvent);
             if (res.isSuccess)
-              Scaffold.of(context).showSnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text("Zu Kalender hinzugefügt!")));
           }
         });

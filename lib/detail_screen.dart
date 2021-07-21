@@ -133,9 +133,9 @@ class DetailScreen extends StatelessWidget {
   }
 
   String formatDate(String start, String end) {
-    final startDate = start.substring(0, 10);
-    final endDate = end.substring(0, 10);
-    final endTime = end.substring(13);
+    final startDate = start.substring(0, 11);
+    final endDate = end.substring(0, 11);
+    final endTime = end.substring(18);
     return startDate == endDate ? "$start bis $endTime" : "$start bis $end";
   }
 }

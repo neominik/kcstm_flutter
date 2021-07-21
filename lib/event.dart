@@ -4,7 +4,7 @@ import 'dart:io' show SocketException;
 import 'package:http/http.dart' as http;
 import 'package:csv/csv.dart' as csv;
 
-final homepage = 'https://kanu-club-steinhuder-meer.de/Drupal8/kcstmkalender.csv';
+final homepage = Uri.parse('https://kanu-club-steinhuder-meer.de/kcstmkalender.csv');
 
 class Event {
   final String title;
@@ -60,15 +60,15 @@ List<Event> decode(String body) {
 Event trToEvent(List tr) {
   return Event(
     title: tr[0],
-    dateStart: tr[1].toString().split("\n - ").first,
-    dateEnd: tr[1].toString().split("\n - ").last,
-    organizer: tr[2],
+    address: tr[1],
+    registerDate: tr[2],
     description: tr[3],
-    phone: tr[4],
+    dateStart: tr[4].toString().split("\n - ").first,
+    dateEnd: tr[4].toString().split("\n - ").last,
     email: tr[5],
-    participants: tr[6],
-    link: tr[7],
-    address: tr[8],
-    registerDate: tr[9],
+    link: tr[6],
+    participants: tr[7],
+    phone: tr[8],
+    organizer: tr[9],
   );
 }

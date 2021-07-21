@@ -108,8 +108,8 @@ class _EventListPageState extends State<EventListPage> {
   }
 
   String formatDate(String start, String end) {
-    final startDate = start.substring(0, 10);
-    final endDate = end.substring(0, 10);
+    final startDate = start.substring(0, 11);
+    final endDate = end.substring(0, 11);
     return startDate == endDate ? startDate : "$startDate\n - $endDate";
   }
 }

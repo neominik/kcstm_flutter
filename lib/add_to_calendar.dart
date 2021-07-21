@@ -59,7 +59,7 @@ class AddToCalendarAction extends StatelessWidget {
   }
 
   DateTime parse(String date) {
-    final formatted = date.substring(0,10).split(".").reversed.join() + "T" + date.substring(13);
+    final formatted = date.substring(5,15).split(".").reversed.join() + "T" + date.substring(18);
     return DateTime.parse(formatted);
   }
 }

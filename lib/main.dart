@@ -7,18 +7,27 @@ void main() => runApp(new MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final AppBarTheme appBarTheme = AppBarTheme(
+      backgroundColor: Colors.grey.shade900,
+      foregroundColor: Colors.white
+    );
+    final ThemeData theme = ThemeData(
+      appBarTheme: appBarTheme,
+      brightness: Brightness.light,
+      primaryColor: Colors.grey.shade900,
+    );
+    final ThemeData darkTheme = ThemeData(
+      appBarTheme: appBarTheme,
+      brightness: Brightness.dark,
+      primaryColor: Colors.grey.shade900,
+    );
     return new MaterialApp(
       title: 'KCSTM',
-      theme: new ThemeData(
-        brightness: Brightness.light,
-        primaryColor: Colors.grey.shade900,
-        accentColor: Colors.indigo,
-
+      theme: theme.copyWith(
+        colorScheme: theme.colorScheme.copyWith(secondary: Colors.indigo)
       ),
-      darkTheme: new ThemeData(
-        brightness: Brightness.dark,
-        primaryColor: Colors.grey.shade900,
-        accentColor: Colors.indigo
+      darkTheme: darkTheme.copyWith(
+          colorScheme: theme.colorScheme.copyWith(secondary: Colors.indigo)
       ),
       themeMode: ThemeMode.system,
       home: new EventListPage(title: 'KCSTM'),

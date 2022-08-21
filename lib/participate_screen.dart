@@ -127,9 +127,9 @@ class ParticipateScreenState extends State<ParticipateScreen> {
         'Anzahl Teilnehmende: ${_participantsController.text}\n' +
         'Telefon: ${_phoneController.text}\n\n' +
         'Diese Mail wurde erstellt durch die KCSTM-APP von Dominik Engelhardt.');
-    final url = 'mailto:${_event.email}?subject=$subject&body=$body';
-    if (await canLaunch(url)) {
-      await launch(url);
+    final url = Uri.parse('mailto:${_event.email}?subject=$subject&body=$body');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
     } else {
       throw 'Could not send email: $url';
     }

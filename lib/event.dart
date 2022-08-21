@@ -63,12 +63,12 @@ Event trToEvent(List tr) {
     address: tr[1],
     registerDate: tr[2],
     description: tr[3],
-    dateStart: tr[4].toString().split("\n - ").first,
-    dateEnd: tr[4].toString().split("\n - ").last,
-    email: tr[5],
-    link: tr[6],
+    dateStart: tr[4].toString().substring(0, 16),
+    dateEnd: tr[5].toString().substring(5),
+    email: tr[6],
     participants: tr[7],
     phone: tr[8],
     organizer: tr[9],
+    link: tr[10],
   );
 }

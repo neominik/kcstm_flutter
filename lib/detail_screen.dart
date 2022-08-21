@@ -29,9 +29,8 @@ class DetailScreen extends StatelessWidget {
           AddToCalendarAction(event),
           IconButton(
             icon: Icon(Icons.launch),
-            onPressed: () => launch(
-                  event.link,
-                  forceSafariVC: false,
+            onPressed: () => launchUrl(
+                  Uri.parse(event.link),
                 ),
             tooltip: 'Im Browser öffnen',
           )
@@ -60,12 +59,12 @@ class DetailScreen extends StatelessWidget {
         .map((s) => s.trim())
         .join('\n');
     final _emailUrl =
-        'mailto:${event.email}?subject=${Uri.encodeComponent(event.title)}';
+        Uri.parse('mailto:${event.email}?subject=${Uri.encodeComponent(event.title)}');
     return ListView(
       padding: const EdgeInsets.all(16.0),
       children: <Widget>[
         Hero(
-          tag: event.link,
+          tag: event.hashCode,
           child: Material(
             type: MaterialType.transparency,
             child: Text(
@@ -92,7 +91,7 @@ class DetailScreen extends StatelessWidget {
           text: TextSpan(
             text: event.email,
             style: _linkStyle,
-            recognizer: TapGestureRecognizer()..onTap = () => launch(_emailUrl),
+            recognizer: TapGestureRecognizer()..onTap = () => launchUrl(_emailUrl),
           ),
         ),
         Text(
@@ -126,7 +125,7 @@ class DetailScreen extends StatelessWidget {
                 text: number,
                 style: _linkStyle,
                 recognizer: TapGestureRecognizer()
-                  ..onTap = () => launch('tel:$number')))
+                  ..onTap = () => launchUrl(Uri.parse('tel:$number'))))
             .expand((textSpan) => <TextSpan>[textSpan, TextSpan(text: ' ')])
             .toList(),
       ));
@@ -135,9 +134,9 @@ class DetailScreen extends StatelessWidget {
   }
 
   String formatDate(String start, String end) {
-    final startDate = start.substring(0, 11);
-    final endDate = end.substring(0, 11);
-    final endTime = end.substring(18);
-    return startDate == endDate ? "$start bis $endTime" : "$start bis $end";
+    final startDate = start.substring(0, 10);
+    final endDate = end.substring(0, 10);
+    final endTime = end.substring(13);
+    return startDate == endDate ? "$start bis $endTime" : "$start bis $endDate $endTime";
   }
 }

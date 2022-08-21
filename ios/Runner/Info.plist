@@ -45,5 +45,7 @@
 	<false/>
 	<key>NSCalendarsUsageDescription</key>
     <string>Fahrten in den Kalender eintragen</string>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 </dict>
 </plist>

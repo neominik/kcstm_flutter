@@ -73,7 +73,7 @@ class _EventListPageState extends State<EventListPage> {
       children: <Widget>[
         ListTile(
           title: Hero(
-            tag: event.link,
+            tag: event.hashCode,
             child: Material(
               type: MaterialType.transparency,
               child: Text(

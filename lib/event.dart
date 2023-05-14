@@ -20,17 +20,17 @@ class Event {
   final String address;
 
   Event({
-    this.title,
-    this.link,
-    this.dateStart,
-    this.dateEnd,
-    this.organizer,
-    this.description,
-    this.registerDate,
-    this.phone,
-    this.email,
-    this.participants,
-    this.address,
+    required this.title,
+    required this.link,
+    required this.dateStart,
+    required this.dateEnd,
+    required this.organizer,
+    required this.description,
+    required this.registerDate,
+    required this.phone,
+    required this.email,
+    required this.participants,
+    required this.address,
   });
 }
 

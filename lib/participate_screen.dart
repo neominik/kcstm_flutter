@@ -7,7 +7,7 @@ import 'event.dart';
 class ParticipateScreen extends StatefulWidget {
   final Event event;
 
-  ParticipateScreen({Key key, @required this.event}) : super(key: key);
+  ParticipateScreen({required Key key, required this.event}) : super(key: key);
 
   @override
   ParticipateScreenState createState() {
@@ -22,7 +22,7 @@ class ParticipateScreenState extends State<ParticipateScreen> {
   final _phoneController = TextEditingController();
   final _commentsController = TextEditingController();
   final _participantsController = TextEditingController(text: '1');
-  SharedPreferences _prefs;
+  late SharedPreferences _prefs;
 
   ParticipateScreenState(this._event) {
     SharedPreferences.getInstance().then((prefs) {
@@ -56,7 +56,7 @@ class ParticipateScreenState extends State<ParticipateScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          if (_formKey.currentState.validate()) {
+          if (_formKey.currentState!.validate()) {
             _persistFields();
             _sendEmail();
           }
@@ -79,7 +79,7 @@ class ParticipateScreenState extends State<ParticipateScreen> {
         TextFormField(
           controller: _nameController,
           validator: (value) {
-            if (value.isEmpty) return 'Bitte Namen eingeben!';
+            if (value!.isEmpty) return 'Bitte Namen eingeben!';
           },
         ),
         Text(
@@ -90,7 +90,7 @@ class ParticipateScreenState extends State<ParticipateScreen> {
           controller: _phoneController,
           keyboardType: TextInputType.phone,
           validator: (value) {
-            if (value.isEmpty)
+            if (value!.isEmpty)
               return 'Bitte Telefonnummer für Rückfragen angeben!';
           },
         ),
@@ -107,7 +107,7 @@ class ParticipateScreenState extends State<ParticipateScreen> {
           controller: _participantsController,
           keyboardType: TextInputType.numberWithOptions(signed: true),
           validator: (value) {
-            if (value.isEmpty)
+            if (value!.isEmpty)
               return 'Bitte die Anzahl der Teilnehmenden angeben!';
           },
         ),
@@ -143,8 +143,8 @@ class ParticipateScreenState extends State<ParticipateScreen> {
 
   void _initFields(SharedPreferences prefs) {
     _prefs = prefs;
-    _nameController.text = prefs.get('name');
-    _phoneController.text = prefs.get('phone');
-    _participantsController.text = prefs.get('participants');
+    _nameController.text = prefs.get('name').toString();
+    _phoneController.text = prefs.get('phone').toString();
+    _participantsController.text = prefs.get('participants').toString();
   }
 }

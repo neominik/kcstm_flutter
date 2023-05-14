@@ -18,7 +18,7 @@ class DetailScreen extends StatelessWidget {
     decoration: TextDecoration.none,
   );
 
-  DetailScreen({Key key, @required this.event}) : super(key: key);
+  DetailScreen({required Key key, required this.event}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class DetailScreen extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (context) => ParticipateScreen(
-                        event: event,
+                        event: event, key: Key('participate-screen'),
                       )));
         },
         tooltip: 'Mitfahren',

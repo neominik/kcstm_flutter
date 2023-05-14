@@ -4,7 +4,7 @@ import 'detail_screen.dart';
 import 'event.dart';
 
 class EventListPage extends StatefulWidget {
-  EventListPage({Key key, this.title}) : super(key: key);
+  EventListPage({required Key key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -47,8 +47,8 @@ class _EventListPageState extends State<EventListPage> {
             snapshot.connectionState == ConnectionState.done) {
           return ListView.builder(
             padding: const EdgeInsets.all(16.0),
-            itemCount: snapshot.data.length,
-            itemBuilder: (context, index) => _buildRow(snapshot.data[index]),
+            itemCount: snapshot.data?.length,
+            itemBuilder: (context, index) => _buildRow(snapshot.data![index]),
           );
         } else if (snapshot.hasError &&
             snapshot.connectionState == ConnectionState.done) {
@@ -100,7 +100,7 @@ class _EventListPageState extends State<EventListPage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => DetailScreen(
-                          event: event,
+                          event: event, key: Key('detail-screen'),
                         )));
           },
         ),

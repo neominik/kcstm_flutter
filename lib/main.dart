@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
           colorScheme: theme.colorScheme.copyWith(secondary: Colors.indigo)
       ),
       themeMode: ThemeMode.system,
-      home: new EventListPage(title: 'KCSTM'),
+      home: new EventListPage(key: Key('event-list'), title: 'KCSTM'),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:device_calendar/device_calendar.dart' as calendar;
+import 'package:timezone/timezone.dart';
 import 'package:flutter/material.dart';
 
 import 'event.dart';
@@ -14,18 +15,18 @@ class AddToCalendarAction extends StatelessWidget {
         icon: Icon(Icons.event),
         onPressed: () async {
           final plugin = calendar.DeviceCalendarPlugin();
-          if (!(await plugin.hasPermissions()).data) {
+          if ((await plugin.hasPermissions()).data! == false) {
             final result = await plugin.requestPermissions();
-            if (!result.data) return;
+            if (result.data! == false) return;
           }
 
           final calendars = await plugin.retrieveCalendars();
           if (calendars.isSuccess) {
-            String selectedCalendar;
-            Iterable<calendar.Calendar> writableCalendars =
-                calendars.data.where((c) => !c.isReadOnly);
-            if (writableCalendars.length == 1) {
-              selectedCalendar = writableCalendars.first.id;
+            String? selectedCalendar;
+            Iterable<calendar.Calendar>? writableCalendars =
+                calendars.data?.where((c) => c.isReadOnly! == false);
+            if (writableCalendars?.length == 1) {
+              selectedCalendar = writableCalendars?.first.id;
             } else {
               selectedCalendar = await showDialog(
                   context: context,
@@ -33,11 +34,11 @@ class AddToCalendarAction extends StatelessWidget {
                     return SimpleDialog(
                       title: const Text('Kalender auswählen'),
                       children: writableCalendars
-                          .map((c) => SimpleDialogOption(
+                          ?.map((c) => SimpleDialogOption(
                                 onPressed: () {
                                   Navigator.pop(context, c.id);
                                 },
-                                child: Text(c.name),
+                                child: Text(c.name ?? 'Unbekannt'),
                               ))
                           .toList(),
                     );
@@ -51,15 +52,15 @@ class AddToCalendarAction extends StatelessWidget {
               allDay: false,
             );
             final res = await plugin.createOrUpdateEvent(calEvent);
-            if (res.isSuccess)
+            if (res!.isSuccess)
               ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text("Zu Kalender hinzugefügt!")));
           }
         });
   }
 
-  DateTime parse(String date) {
+  TZDateTime parse(String date) {
     final formatted = date.substring(5,15).split(".").reversed.join() + "T" + date.substring(18);
-    return DateTime.parse(formatted);
+    return TZDateTime.parse(getLocation('Europe/Berlin'), formatted);
   }
 }

@@ -58,13 +58,15 @@ List<Event> decode(String body) {
 }
 
 Event trToEvent(List tr) {
+  final dateStart = tr[4].toString().length >= 16 ? tr[4].toString().substring(0, 16) : "";
+  final dateEnd = tr[5].toString().length >= 5 ? tr[5].toString().substring(5) : "";
   return Event(
     title: tr[0],
     address: tr[1],
     registerDate: tr[2],
     description: tr[3],
-    dateStart: tr[4].toString().substring(0, 16),
-    dateEnd: tr[5].toString().substring(5),
+    dateStart: dateStart,
+    dateEnd: dateEnd,
     email: tr[6],
     participants: tr[7],
     phone: tr[8],

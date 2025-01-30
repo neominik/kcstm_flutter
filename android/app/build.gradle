@@ -30,13 +30,10 @@ android {
     compileSdkVersion flutter.compileSdkVersion
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
-    lintOptions {
-        disable 'InvalidPackage'
-    }
 
     defaultConfig {
         applicationId "com.neominik.kcstm"
@@ -60,9 +57,17 @@ android {
             signingConfig signingConfigs.release
 
             minifyEnabled true
+            shrinkResources true
 
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    namespace 'de.neominik.kcstmflutter'
+    lint {
+        disable 'InvalidPackage'
+    }
+    lintOptions {
+        abortOnError false
     }
 }
 

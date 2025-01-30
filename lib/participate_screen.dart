@@ -143,8 +143,8 @@ class ParticipateScreenState extends State<ParticipateScreen> {
 
   void _initFields(SharedPreferences prefs) {
     _prefs = prefs;
-    _nameController.text = prefs.get('name').toString();
-    _phoneController.text = prefs.get('phone').toString();
-    _participantsController.text = prefs.get('participants').toString();
+    _nameController.text = prefs.get('name')?.toString() ?? '';
+    _phoneController.text = prefs.get('phone')?.toString() ?? '';
+    _participantsController.text = prefs.get('participants')?.toString() ?? '1';
   }
 }
